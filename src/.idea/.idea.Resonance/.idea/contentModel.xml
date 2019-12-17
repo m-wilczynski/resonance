@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="C:\Repositories\resonance\src" t="IncludeFlat">
+      <e p="packages" t="ExcludeRecursive" />
+      <e p="Resonance.FeatureFlags" t="IncludeRecursive">
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="FeatureFlag.cs" t="Include" />
+        <e p="FeatureFlagRegistry.cs" t="Include" />
+        <e p="FeatureFlagsRegistryOptions.cs" t="Include" />
+        <e p="IFeatureFlagRegistry.cs" t="Include" />
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="netstandard2.0" t="Include">
+              <e p="Resonance.FeatureFlags.AssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+        <e p="Resonance.FeatureFlags.csproj" t="IncludeRecursive" />
+        <e p="Storage" t="Include">
+          <e p="FeatureFlagStorageInitializationStrategy.cs" t="Include" />
+          <e p="FeatureFlagStorageOptions.cs" t="Include" />
+          <e p="IFeatureFlagRepository.cs" t="Include" />
+        </e>
+      </e>
+      <e p="Resonance.sln" t="IncludeFlat" />
+    </e>
+    <e p="C:\Users\micha\.Rider2019.3\system\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\micha\.Rider2019.3\system\resharper-host\local\Transient\ReSharperHost\v193\SolutionCaches\_Resonance.1971724077.00" t="ExcludeRecursive" />
+  </component>
+</project>
