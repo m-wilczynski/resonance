@@ -1,10 +1,11 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Resonance.FeatureFlags.Storage
 {
     public interface IFeatureFlagRepository
     {
         Task Initialize(FeatureFlagStorageOptions storageOptions);
-        Task<FeatureFlag> GetAllFlags();
+        Task<ICollection<FeatureFlag>> GetAllFlags();
     }
 }
