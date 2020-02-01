@@ -4,7 +4,7 @@ using Resonance.UseCases.Contracts.Responses;
 namespace Resonance.UseCases
 {
     /// <summary>
-    /// Handler responsible for give <see cref="TCommand"/>
+    /// Handler responsible for handling given <see cref="TCommand"/>
     /// </summary>
     /// <typeparam name="TCommand">Command (to modify system) to be handled</typeparam>
     public interface ICommandHandler<TCommand> : ICommandHandler
@@ -19,7 +19,7 @@ namespace Resonance.UseCases
     }
 
     /// <summary>
-    /// Handler responsible for give <see cref="TCommand"/>
+    /// Handler responsible for handling given <see cref="TCommand"/>
     /// </summary>
     /// <typeparam name="TCommand">Command (to modify system) to be handled</typeparam>
     /// <typeparam name="TResponse">Response on handling command</typeparam>
@@ -36,7 +36,7 @@ namespace Resonance.UseCases
 
 
     /// <summary>
-    /// Marker interface
+    /// Marker interface for command handlers
     /// </summary>
     public interface ICommandHandler
     {

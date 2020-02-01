@@ -1,10 +1,10 @@
-﻿using _NAMESPACE_.Shared.Contracts.Requests;
-using _NAMESPACE_.Shared.Contracts.Responses;
+﻿using Resonance.UseCases.Contracts.Requests;
+using Resonance.UseCases.Contracts.Responses;
 
-namespace _NAMESPACE_.Shared.Infrastructure.Handlers
+namespace Resonance.UseCases
 {
     /// <summary>
-    /// Handler responsible for given <see cref="TQuery"/>
+    /// Handler responsible for handling given <see cref="TQuery"/>
     /// </summary>
     /// <typeparam name="TQuery">Query (retrieve something) to be handled</typeparam>
     /// <typeparam name="TResponse">Response on handling query</typeparam>
