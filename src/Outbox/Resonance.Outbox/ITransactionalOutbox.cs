@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace Resonance.Outbox
 {
-    interface ITransactionalOutbox
+    public interface ITransactionalOutbox
     {
         Task Send<TMessage>(TMessage message, IDbTransaction transaction = null, DateTime? sendTime = null);
     }

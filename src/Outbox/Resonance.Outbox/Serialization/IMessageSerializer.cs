@@ -1,10 +1,11 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 
 namespace Resonance.Outbox.Serialization
 {
     public interface IMessageSerializer
     {
         Task<byte[]> Serialize<TMessage>(TMessage message);
-        Task<TMessage> Deserialize<TMessage>(byte[] message);
+        Task<object> Deserialize(Type messageType, byte[] message);
     }
 }

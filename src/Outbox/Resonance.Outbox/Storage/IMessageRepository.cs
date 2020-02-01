@@ -21,13 +21,15 @@ namespace Resonance.Outbox.Storage
         /// </summary>
         /// <param name="howManyMessages">How many messages to take (ie. SELECT TOP <paramref name="howManyMessages"/>); if NULL - takes all</param>
         /// <returns></returns>
-        Task<ICollection<SerializedMessage>> GetMessagesAsMarkedSent(uint? howManyMessages = null);
+        Task<ICollection<SerializedMessage>> GetMessagesAsMarkedSent(IDbTransaction transaction, uint? howManyMessages = null);
 
         /// <summary>
         /// Get messages for sending and removes them from storage on read;
         /// </summary>
         /// <param name="howManyMessages">How many messages to take (ie. SELECT TOP <paramref name="howManyMessages"/>); if NULL - takes all</param>
         /// <returns></returns>
-        Task<ICollection<SerializedMessage>> GetMessagesAsRemoved(uint? howManyMessages = null);
+        Task<ICollection<SerializedMessage>> GetMessagesAsRemoved(IDbTransaction transaction, uint? howManyMessages = null);
+
+
     }
 }
