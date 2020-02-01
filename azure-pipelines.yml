@@ -18,3 +18,6 @@ steps:
 
 - script: cd ./src/UseCases && dotnet build --configuration $(buildConfiguration)
   displayName: 'UseCases - dotnet build $(buildConfiguration)'
+
+- script: cd ./src/Outbox && dotnet build --configuration $(buildConfiguration)
+  displayName: 'Outbox - dotnet build $(buildConfiguration)'
