@@ -29,7 +29,5 @@ namespace Resonance.Outbox.Storage
         /// <param name="howManyMessages">How many messages to take (ie. SELECT TOP <paramref name="howManyMessages"/>); if NULL - takes all</param>
         /// <returns></returns>
         Task<ICollection<SerializedMessage>> GetMessagesAsRemoved(IDbTransaction transaction, uint? howManyMessages = null);
-
-
     }
 }

@@ -4,9 +4,13 @@ namespace Resonance.Outbox.Serialization
 {
     public class SerializedMessage
     {
-        public SerializedMessage(byte[] payload, Type messageTypeQualifiedName, DateTime? sendTimeUtc)
+        public SerializedMessage(
+            byte[] payload, 
+            Type messageTypeQualifiedName, 
+            DateTime? sendTimeUtc)
         {
-            Payload = payload;
+            if (messageTypeQualifiedName == null) throw new ArgumentNullException(nameof(messageTypeQualifiedName));
+            Payload = payload ?? throw new ArgumentNullException(nameof(payload));
             MessageTypeAssemblyQualifiedName = messageTypeQualifiedName.AssemblyQualifiedName;
             SendTimeUtc = sendTimeUtc?.ToUniversalTime() ?? DateTime.UtcNow;
         }

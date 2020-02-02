@@ -5,7 +5,9 @@ VisualStudioVersion = 15.0.27703.2042
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Resonance.Outbox", "Resonance.Outbox\Resonance.Outbox.csproj", "{F48AD68F-C61D-48C2-AE10-BC8DE76F1A06}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Resonance.Outbox.Outbound", "Resonance.Outbox.Outbound\Resonance.Outbox.Outbound.csproj", "{4E6CEDFF-AF88-4DAB-BC44-F1709D3B72E5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Resonance.Outbox.Outbound", "Resonance.Outbox.Outbound\Resonance.Outbox.Outbound.csproj", "{4E6CEDFF-AF88-4DAB-BC44-F1709D3B72E5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Resonance.Outbox.SqlServer", "Resonance.Outbox.SqlServer\Resonance.Outbox.SqlServer.csproj", "{9CE8C63B-F781-4B9E-9E41-5AD2D03C883F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{4E6CEDFF-AF88-4DAB-BC44-F1709D3B72E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4E6CEDFF-AF88-4DAB-BC44-F1709D3B72E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4E6CEDFF-AF88-4DAB-BC44-F1709D3B72E5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9CE8C63B-F781-4B9E-9E41-5AD2D03C883F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9CE8C63B-F781-4B9E-9E41-5AD2D03C883F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9CE8C63B-F781-4B9E-9E41-5AD2D03C883F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9CE8C63B-F781-4B9E-9E41-5AD2D03C883F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -26,11 +26,11 @@ namespace Resonance.Outbox.Outbound
             IMessageSerializer messageSerializer, 
             ICollection<IMessageForwarder> messageForwarders)
         {
-            _messageRepository = messageRepository;
-            _forwardingOptions = forwardingOptions;
-            _connectionFactory = connectionFactory;
-            _messageSerializer = messageSerializer;
-            _messageForwarders = messageForwarders;
+            _messageRepository = messageRepository ?? throw new ArgumentNullException(nameof(messageRepository));
+            _forwardingOptions = forwardingOptions ?? throw new ArgumentNullException(nameof(forwardingOptions));
+            _connectionFactory = connectionFactory ?? throw new ArgumentNullException(nameof(connectionFactory));
+            _messageSerializer = messageSerializer ?? throw new ArgumentNullException(nameof(messageSerializer));
+            _messageForwarders = messageForwarders ?? throw new ArgumentNullException(nameof(messageForwarders));
         }
 
         public async Task ForwardMessagesFromOutbox()

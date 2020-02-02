@@ -1,11 +1,16 @@
-﻿using Resonance.Outbox.Storage;
+﻿using System;
+using Resonance.Outbox.Storage;
 
 namespace Resonance.Outbox.Outbound
 {
     public class ForwardingOptions
     {
-        public ForwardingOptions(ReadMode readMode, bool logCompletionInsideTransaction = false, uint? batchSize = null)
+        public ForwardingOptions(
+            ReadMode readMode, 
+            bool logCompletionInsideTransaction = false, 
+            uint? batchSize = null)
         {
+            if (ReadMode == ReadMode.Undefined) throw new ArgumentException($"{nameof(ReadMode)} is undefined!");
             ReadMode = readMode;
             LogCompletionInsideTransaction = logCompletionInsideTransaction;
             BatchSize = batchSize;

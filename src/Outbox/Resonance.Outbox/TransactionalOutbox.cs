@@ -12,10 +12,12 @@ namespace Resonance.Outbox
         private readonly IMessageRepository _messageRepository;
         private readonly IMessageSerializer _messageSerializer;
 
-        public TransactionalOutbox(IMessageRepository messageRepository, IMessageSerializer messageSerializer)
+        public TransactionalOutbox(
+            IMessageRepository messageRepository, 
+            IMessageSerializer messageSerializer)
         {
-            _messageRepository = messageRepository;
-            _messageSerializer = messageSerializer;
+            _messageRepository = messageRepository ?? throw new ArgumentNullException(nameof(messageRepository));
+            _messageSerializer = messageSerializer ?? throw new ArgumentNullException(nameof(messageSerializer));
         }
 
         public async Task Send<TMessage>(TMessage message, IDbTransaction transaction = null, DateTime? sendTime = null)
@@ -25,9 +27,9 @@ namespace Resonance.Outbox
                 EnsureThereIsActiveAmbientTransaction();
             }
 
-            var payload = await _messageSerializer.Serialize(message);
+            var payload = await _messageSerializer.Serialize(message).ConfigureAwait(false);
             var serializedMessage = new SerializedMessage(payload, message.GetType(), sendTime);
-            await _messageRepository.SaveMessage(serializedMessage, transaction);
+            await _messageRepository.SaveMessage(serializedMessage, transaction).ConfigureAwait(false);
         }
 
         private void EnsureThereIsActiveAmbientTransaction()
