@@ -2,9 +2,8 @@
 using System.Data;
 using System.Threading.Tasks;
 using Dapper;
-using Resonance.Outbox.Storage;
 
-namespace Resonance.Outbox.SqlServer
+namespace Resonance.Outbox.Storage.SqlServer
 {
     public class StorageInitializer : IStorageInitializer
     {

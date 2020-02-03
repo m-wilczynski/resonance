@@ -27,7 +27,7 @@ namespace Resonance.Outbox
                 EnsureThereIsActiveAmbientTransaction();
             }
 
-            var payload = await _messageSerializer.Serialize(message).ConfigureAwait(false);
+            var payload = _messageSerializer.Serialize(message);
             var serializedMessage = new SerializedMessage(payload, message.GetType(), sendTime);
             await _messageRepository.SaveMessage(serializedMessage, transaction).ConfigureAwait(false);
         }
