@@ -6,7 +6,7 @@ namespace Resonance.Outbox.Serialization.MessagePack
 {
     public class MessagePackSerializer : IMessageSerializer
     {
-        public MessagePackSerializer()
+        static MessagePackSerializer()
         {
             CompositeResolver.RegisterAndSetAsDefault(StandardResolverAllowPrivate.Instance,
                 BuiltinResolver.Instance,

@@ -4,6 +4,8 @@ namespace Resonance.Outbox.Serialization
 {
     public class SerializedMessage
     {
+        private SerializedMessage() { }
+
         public SerializedMessage(
             byte[] payload, 
             Type messageTypeQualifiedName, 
