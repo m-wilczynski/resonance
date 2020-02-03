@@ -5,18 +5,20 @@ using Dapper;
 
 namespace Resonance.Outbox.Storage.SqlServer
 {
-    public class StorageInitializer : IStorageInitializer
+    public class SqlServerStorageInitializer : IStorageInitializer
     {
         private Func<IDbConnection> _connectionFactory;
         private readonly StorageConfiguration _storageConfiguration;
 
-        public StorageInitializer(
+        public SqlServerStorageInitializer(
             Func<IDbConnection> connectionFactory,
             StorageConfiguration storageConfiguration)
         {
             _connectionFactory = connectionFactory ?? throw new ArgumentNullException(nameof(connectionFactory));
             _storageConfiguration = storageConfiguration ?? throw new ArgumentNullException(nameof(storageConfiguration));
         }
+
+        public bool InitializeOnStartup => _storageConfiguration.InitializeTablesOnStartup;
 
         public async Task InitializeTables()
         {

@@ -7,12 +7,12 @@ using Resonance.Outbox.Serialization;
 
 namespace Resonance.Outbox.Storage.SqlServer
 {
-    public class MessageRepository : IMessageRepository
+    public class SqlServerMessageRepository : IMessageRepository
     {
         private Func<IDbConnection> _connectionFactory;
         private StorageConfiguration _storageConfiguration;
 
-        public MessageRepository(
+        public SqlServerMessageRepository(
             Func<IDbConnection> connectionFactory, 
             StorageConfiguration storageConfiguration)
         {

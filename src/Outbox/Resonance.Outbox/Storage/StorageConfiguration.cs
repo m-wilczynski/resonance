@@ -7,6 +7,7 @@
         public string SchemaName { get; set; } = "dbo";
         public string MessageTableName { get; set; } = "messages";
         public string LogTableName { get; set; } = "logs";
+        public bool InitializeTablesOnStartup { get; set; } = true;
 
         public bool IsComplete =>
             OperationTimeoutInSeconds > 0
