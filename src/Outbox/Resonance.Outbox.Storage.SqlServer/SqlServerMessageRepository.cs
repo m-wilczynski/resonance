@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using System.Threading.Tasks;
 using Dapper;
 using Resonance.Outbox.Serialization;
@@ -27,9 +28,10 @@ namespace Resonance.Outbox.Storage.SqlServer
                     INSERT INTO {_storageConfiguration.SchemaName}.{_storageConfiguration.MessageTableName}
                     VALUES 
                     (
-                        @{nameof(serializedMessage.Payload)},
-                        @{nameof(serializedMessage.MessageTypeAssemblyQualifiedName)},
-                        @{nameof(serializedMessage.SendTimeUtc)}
+                        @{nameof(SerializedMessage.Payload)},
+                        @{nameof(SerializedMessage.MessageTypeAssemblyQualifiedName)},
+                        @{nameof(SerializedMessage.ReceiveDateUtc)},
+                        @{nameof(SerializedMessage.SuccessfulForwardDateUtc)}
                     )";
 
             if (transaction == null)
@@ -49,9 +51,41 @@ namespace Resonance.Outbox.Storage.SqlServer
             }
         }
 
-        public Task<ICollection<SerializedMessage>> GetMessagesAsMarkedSent(IDbTransaction transaction, uint? howManyMessages = null)
+        public async Task<ICollection<SerializedMessage>> GetMessagesAsMarkedSent(IDbTransaction transaction, uint? howManyMessages = null)
         {
-            throw new System.NotImplementedException();
+            string batchSizeSql = howManyMessages.HasValue && howManyMessages.Value > 0
+                ? $"TOP {howManyMessages}"
+                : "TOP 100 PERCENT";
+
+            string sql = $@"
+                DECLARE @date DATETIME = GETDATE();
+
+                UPDATE msg
+                SET {nameof(SerializedMessage.SuccessfulForwardDateUtc)} = @date
+                OUTPUT 
+                    inserted.{nameof(SerializedMessage.Payload)}, 
+                    inserted.{nameof(SerializedMessage.MessageTypeAssemblyQualifiedName)}
+                FROM (SELECT {batchSizeSql} * FROM {_storageConfiguration.SchemaName}.{_storageConfiguration.MessageTableName}) msg
+                WHERE {nameof(SerializedMessage.SuccessfulForwardDateUtc)} IS NULL;";
+
+            if (transaction == null)
+            {
+                using (var connection = _connectionFactory())
+                {
+                    return (await connection.QueryAsync<SerializedMessage>(sql,
+                        param: null,
+                        commandTimeout: _storageConfiguration.OperationTimeoutInSeconds)
+                    ).ToList();
+                }
+            }
+            else
+            {
+                return (await transaction.Connection.QueryAsync<SerializedMessage>(sql,
+                        param: null,
+                        commandTimeout: _storageConfiguration.OperationTimeoutInSeconds,
+                        transaction: transaction)).ToList();
+            }
+
         }
 
         public Task<ICollection<SerializedMessage>> GetMessagesAsRemoved(IDbTransaction transaction, uint? howManyMessages = null)

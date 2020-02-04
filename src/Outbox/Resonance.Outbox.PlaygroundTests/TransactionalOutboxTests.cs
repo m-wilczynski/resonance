@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Dapper;
 using Resonance.Outbox.Serialization;
 using Resonance.Outbox.Serialization.MessagePack;
+using Resonance.Outbox.Storage;
 using Resonance.Outbox.Storage.SqlServer;
 using Xunit;
 
@@ -25,13 +26,13 @@ namespace Resonance.Outbox.PlaygroundTests
                 .UseMessagePack()
                 .Build();
 
-            var exampleMessage = new ExampleMessage
+            var exampleMessages = Enumerable.Range(0, 10000).Select(_ => new ExampleMessage
             {
                 Id = Guid.NewGuid(),
                 Number = new Random().Next(200000),
                 Text = "Text-" + Guid.NewGuid() + Guid.NewGuid() + Guid.NewGuid(),
                 LargeArray = Enumerable.Range(0, 1000).ToArray()
-            };
+            });
 
             using (var connection = new SqlConnection(connectionString))
             {
@@ -42,8 +43,11 @@ namespace Resonance.Outbox.PlaygroundTests
                     //await connection.ExecuteAsync(...);
                     //await connection.QueryAsync(...);
 
-                    await outbox.Send(exampleMessage,
-                        transaction);
+                    foreach (var message in exampleMessages)
+                    {
+                        await outbox.Send(message,
+                            transaction);
+                    }
 
                     transaction.Commit();
                 }
@@ -51,21 +55,27 @@ namespace Resonance.Outbox.PlaygroundTests
 
             using (var connection = new SqlConnection(connectionString))
             {
-                var message =
-                    (await connection.QueryAsync<SerializedMessage>(@"
-                        SELECT TOP 1
-                            Payload, 
-                            MessageTypeAssemblyQualifiedName 
-                        FROM dbo.messages
-                        ORDER BY Id DESC"))
-                    .SingleOrDefault();
+                connection.Open();
 
-                var type = Type.GetType(message.MessageTypeAssemblyQualifiedName);
-                var result = (ExampleMessage) new MessagePackSerializer().Deserialize(type, message.Payload);
+                using (var transaction = connection.BeginTransaction(IsolationLevel.ReadCommitted))
+                {
 
-                Assert.Equal(result.Text, exampleMessage.Text);
-                Assert.Equal(result.Number, exampleMessage.Number);
-                Assert.True(result.LargeArray.Intersect(exampleMessage.LargeArray).Count() == exampleMessage.LargeArray.Length);
+                    var messages = await new SqlServerMessageRepository(() => new SqlConnection(connectionString),
+                            new StorageConfiguration())
+                        .GetMessagesAsMarkedSent(transaction);
+
+                    foreach (var message in messages)
+                    {
+                        var type = Type.GetType(message.MessageTypeAssemblyQualifiedName);
+                        var result = (ExampleMessage) new MessagePackSerializer().Deserialize(type, message.Payload);
+                    }
+
+                    //Assert.Equal(result.Text, exampleMessage.Text);
+                    //Assert.Equal(result.Number, exampleMessage.Number);
+                    //Assert.True(result.LargeArray.Intersect(exampleMessage.LargeArray).Count() == exampleMessage.LargeArray.Length);
+
+                    transaction.Commit();
+                }
             }
         }
     }

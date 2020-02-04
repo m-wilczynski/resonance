@@ -2,6 +2,7 @@
 using System.Data;
 using System.Threading.Tasks;
 using Dapper;
+using Resonance.Outbox.Serialization;
 
 namespace Resonance.Outbox.Storage.SqlServer
 {
@@ -41,9 +42,23 @@ namespace Resonance.Outbox.Storage.SqlServer
                     CREATE TABLE dbo.messages
                     (
 	                    Id INT IDENTITY(1,1) PRIMARY KEY,
-	                    Payload VARBINARY(MAX) NOT NULL,
-	                    MessageTypeAssemblyQualifiedName NVARCHAR(500) NOT NULL,
-	                    SendTimeUtc DATETIME NOT NULL
+	                    {nameof(SerializedMessage.Payload)} VARBINARY(MAX) NOT NULL,
+	                    {nameof(SerializedMessage.MessageTypeAssemblyQualifiedName)} NVARCHAR(500) NOT NULL,
+	                    {nameof(SerializedMessage.ReceiveDateUtc)} DATETIME NOT NULL,
+	                    {nameof(SerializedMessage.SuccessfulForwardDateUtc)} DATETIME NULL,
+                    );
+
+                    IF NOT EXISTS
+                    (
+                        SELECT 1 
+                        FROM sys.indexes 
+                        WHERE name = 'IX_{nameof(SerializedMessage.SuccessfulForwardDateUtc)}' 
+                        AND object_id = OBJECT_ID('{_storageConfiguration.SchemaName}.{_storageConfiguration.MessageTableName}')
+                    )
+                    CREATE NONCLUSTERED INDEX IX_{nameof(SerializedMessage.SuccessfulForwardDateUtc)} 
+                    ON {_storageConfiguration.SchemaName}.{_storageConfiguration.MessageTableName}
+                    (
+	                    {nameof(SerializedMessage.SuccessfulForwardDateUtc)} ASC
                     );
 
                     IF NOT EXISTS 
