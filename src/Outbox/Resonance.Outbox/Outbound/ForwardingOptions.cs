@@ -10,7 +10,7 @@ namespace Resonance.Outbox.Outbound
             bool logCompletionInsideTransaction = false, 
             uint? batchSize = null)
         {
-            if (ReadMode == ReadMode.Undefined) throw new ArgumentException($"{nameof(ReadMode)} is undefined!");
+            if (readMode == ReadMode.Undefined) throw new ArgumentException($"{nameof(ReadMode)} is undefined!");
             ReadMode = readMode;
             LogCompletionInsideTransaction = logCompletionInsideTransaction;
             BatchSize = batchSize;

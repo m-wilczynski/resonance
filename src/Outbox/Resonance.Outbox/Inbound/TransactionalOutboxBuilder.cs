@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Resonance.Outbox.Serialization;
 using Resonance.Outbox.Storage;
 
-namespace Resonance.Outbox
+namespace Resonance.Outbox.Inbound
 {
     public class TransactionOutboxBuilder
     {

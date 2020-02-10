@@ -37,7 +37,7 @@ namespace Resonance.Outbox.Outbound
             }
         }
 
-        public async Task ForwardMessagesFromOutbox()
+        public async Task ForwardUnsentMessagesFromOutbox()
         {
             using (var connection = _connectionFactory())
             {

@@ -1,10 +1,13 @@
 using System;
 using System.Data;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using Dapper;
+using Resonance.Outbox.Inbound;
+using Resonance.Outbox.Outbound;
 using Resonance.Outbox.Serialization;
 using Resonance.Outbox.Serialization.MessagePack;
 using Resonance.Outbox.Storage;
@@ -26,10 +29,16 @@ namespace Resonance.Outbox.PlaygroundTests
                 .UseMessagePack()
                 .Build();
 
-            var exampleMessages = Enumerable.Range(0, 10000).Select(_ => new ExampleMessage
+            var outboxForwarder = await new OutboxForwarderBuilder()
+                .UseSqlServer(connectionString)
+                .UseMessagePack()
+                .UseMessageForwarders(new[] {new HelloForwarder()})
+                .Build();
+
+            var exampleMessages = Enumerable.Range(123, 100).Select(_ => new ExampleMessage
             {
                 Id = Guid.NewGuid(),
-                Number = new Random().Next(200000),
+                Number = _,
                 Text = "Text-" + Guid.NewGuid() + Guid.NewGuid() + Guid.NewGuid(),
                 LargeArray = Enumerable.Range(0, 1000).ToArray()
             });
@@ -53,30 +62,13 @@ namespace Resonance.Outbox.PlaygroundTests
                 }
             }
 
-            using (var connection = new SqlConnection(connectionString))
-            {
-                connection.Open();
+            Console.WriteLine("Outbox done!");
 
-                using (var transaction = connection.BeginTransaction(IsolationLevel.ReadCommitted))
-                {
+            await outboxForwarder.ForwardUnsentMessagesFromOutbox();
 
-                    var messages = (await new SqlServerMessageRepository(() => new SqlConnection(connectionString),
-                            new StorageConfiguration())
-                        .GetMessagesAsMarkedSent(transaction))
-                        .Select(message =>
-                        {
-                            var type = Type.GetType(message.MessageTypeAssemblyQualifiedName);
-                            return (ExampleMessage)new MessagePackSerializer().Deserialize(type, message.Payload);
-                        })
-                        .ToList();
+            Console.WriteLine("Forwarders done!");
 
-                    //Assert.Equal(result.Text, exampleMessage.Text);
-                    //Assert.Equal(result.Number, exampleMessage.Number);
-                    //Assert.True(result.LargeArray.Intersect(exampleMessage.LargeArray).Count() == exampleMessage.LargeArray.Length);
-
-                    transaction.Commit();
-                }
-            }
+            Console.WriteLine("Done!");
         }
     }
 
@@ -91,5 +83,14 @@ namespace Resonance.Outbox.PlaygroundTests
         public Guid Id { get; set; }
         [DataMember]
         public int[] LargeArray { get; set; }
+    }
+
+    public class HelloForwarder : SingleMessageTypeForwarder<ExampleMessage>
+    {
+        public override Task ForwardCasted(ExampleMessage message)
+        {
+            Trace.WriteLine($"Hello message no. {message.Number}");
+            return Task.CompletedTask;
+        }
     }
 }

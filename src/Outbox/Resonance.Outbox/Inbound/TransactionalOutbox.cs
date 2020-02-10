@@ -5,7 +5,7 @@ using System.Transactions;
 using Resonance.Outbox.Serialization;
 using Resonance.Outbox.Storage;
 
-namespace Resonance.Outbox
+namespace Resonance.Outbox.Inbound
 {
     public class TransactionalOutbox : ITransactionalOutbox
     {
