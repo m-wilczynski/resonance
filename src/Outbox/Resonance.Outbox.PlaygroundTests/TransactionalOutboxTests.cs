@@ -3,14 +3,11 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Linq;
-using System.Runtime.Serialization;
 using System.Threading.Tasks;
-using Dapper;
 using Resonance.Outbox.Inbound;
+using Resonance.Outbox.MessageAssembly;
 using Resonance.Outbox.Outbound;
-using Resonance.Outbox.Serialization;
 using Resonance.Outbox.Serialization.MessagePack;
-using Resonance.Outbox.Storage;
 using Resonance.Outbox.Storage.SqlServer;
 using Xunit;
 
@@ -70,19 +67,6 @@ namespace Resonance.Outbox.PlaygroundTests
 
             Console.WriteLine("Done!");
         }
-    }
-
-    [DataContract]
-    public class ExampleMessage
-    {
-        [DataMember]
-        public string Text { get; set; }
-        [DataMember]
-        public int Number { get; set; }
-        [DataMember]
-        public Guid Id { get; set; }
-        [DataMember]
-        public int[] LargeArray { get; set; }
     }
 
     public class HelloForwarder : SingleMessageTypeForwarder<ExampleMessage>
