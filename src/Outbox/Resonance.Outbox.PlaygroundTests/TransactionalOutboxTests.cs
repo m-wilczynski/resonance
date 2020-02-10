@@ -60,15 +60,15 @@ namespace Resonance.Outbox.PlaygroundTests
                 using (var transaction = connection.BeginTransaction(IsolationLevel.ReadCommitted))
                 {
 
-                    var messages = await new SqlServerMessageRepository(() => new SqlConnection(connectionString),
+                    var messages = (await new SqlServerMessageRepository(() => new SqlConnection(connectionString),
                             new StorageConfiguration())
-                        .GetMessagesAsMarkedSent(transaction);
-
-                    foreach (var message in messages)
-                    {
-                        var type = Type.GetType(message.MessageTypeAssemblyQualifiedName);
-                        var result = (ExampleMessage) new MessagePackSerializer().Deserialize(type, message.Payload);
-                    }
+                        .GetMessagesAsMarkedSent(transaction))
+                        .Select(message =>
+                        {
+                            var type = Type.GetType(message.MessageTypeAssemblyQualifiedName);
+                            return (ExampleMessage)new MessagePackSerializer().Deserialize(type, message.Payload);
+                        })
+                        .ToList();
 
                     //Assert.Equal(result.Text, exampleMessage.Text);
                     //Assert.Equal(result.Number, exampleMessage.Number);

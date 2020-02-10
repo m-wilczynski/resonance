@@ -1,6 +1,6 @@
 ﻿namespace Resonance.Outbox.Serialization.MessagePack
 {
-    public static class TransactionalOutboxBuilderExtensions
+    public static class BuilderExtensions
     {
         public static TransactionOutboxBuilder UseMessagePack(
             this TransactionOutboxBuilder builder)

@@ -4,7 +4,7 @@ using System.Data.SqlClient;
 
 namespace Resonance.Outbox.Storage.SqlServer
 {
-    public static class TransactionalOutboxBuilderExtensions
+    public static class BuilderExtensions
     {
         public static TransactionOutboxBuilder UseSqlServer(
             this TransactionOutboxBuilder builder,

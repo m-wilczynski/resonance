@@ -1,6 +1,6 @@
 ﻿namespace Resonance.Outbox.Serialization.Utf8Json
 {
-    public static class TransactionalOutboxBuilderExtensions
+    public static class BuilderExtensions
     {
         public static TransactionOutboxBuilder UseUtf8Json(
             this TransactionOutboxBuilder builder)

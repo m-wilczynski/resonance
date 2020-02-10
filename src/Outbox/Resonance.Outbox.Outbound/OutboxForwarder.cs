@@ -31,6 +31,10 @@ namespace Resonance.Outbox.Outbound
             _connectionFactory = connectionFactory ?? throw new ArgumentNullException(nameof(connectionFactory));
             _messageSerializer = messageSerializer ?? throw new ArgumentNullException(nameof(messageSerializer));
             _messageForwarders = messageForwarders ?? throw new ArgumentNullException(nameof(messageForwarders));
+            if (_messageForwarders.Count == 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(messageForwarders));
+            }
         }
 
         public async Task ForwardMessagesFromOutbox()
@@ -52,6 +56,7 @@ namespace Resonance.Outbox.Outbound
                         //TODO: Introduce parallelism (ie. Parallel.ForEach) ?
                         foreach (var message in messagesToForward)
                         {
+                            //TODO: Cache resolved types
                             var messageType = Type.GetType(message.MessageTypeAssemblyQualifiedName);
                             if (messageType == null)
                             {
