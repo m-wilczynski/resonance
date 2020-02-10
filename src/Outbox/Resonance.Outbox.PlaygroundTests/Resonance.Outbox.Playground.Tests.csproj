@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Resonance.Outbox.AnotherMessageAssembly\Resonance.Outbox.MessageAssembly.csproj" />
+    <ProjectReference Include="..\Resonance.Outbox.AnotherMessageAssembly\Resonance.Outbox.Playground.MessageAssembly.csproj" />
     <ProjectReference Include="..\Resonance.Outbox.Serialization.MessagePack\Resonance.Outbox.Serialization.MessagePack.csproj" />
     <ProjectReference Include="..\Resonance.Outbox.Serialization.Utf8Json\Resonance.Outbox.Serialization.Utf8Json.csproj" />
     <ProjectReference Include="..\Resonance.Outbox.Storage.SqlServer\Resonance.Outbox.Storage.SqlServer.csproj" />

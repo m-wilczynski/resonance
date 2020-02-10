@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace Resonance.Outbox.MessageAssembly
+namespace Resonance.Outbox.Playground.MessageAssembly
 {
     [DataContract]
     public class ExampleMessage

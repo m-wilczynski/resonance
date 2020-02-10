@@ -15,9 +15,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Resonance.Outbox.Serializat
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Resonance.Outbox.Serialization.MessagePack", "Resonance.Outbox.Serialization.MessagePack\Resonance.Outbox.Serialization.MessagePack.csproj", "{89A0E845-FF12-4CAA-B4B8-BE316C86D796}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Resonance.Outbox.PlaygroundTests", "Resonance.Outbox.PlaygroundTests\Resonance.Outbox.PlaygroundTests.csproj", "{DDAE7C18-E301-4E23-BB56-BE32F8EB3449}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Resonance.Outbox.Playground.Tests", "Resonance.Outbox.PlaygroundTests\Resonance.Outbox.Playground.Tests.csproj", "{DDAE7C18-E301-4E23-BB56-BE32F8EB3449}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Resonance.Outbox.MessageAssembly", "Resonance.Outbox.AnotherMessageAssembly\Resonance.Outbox.MessageAssembly.csproj", "{8580503B-EB00-4F05-B41A-A58CC5D13E82}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Resonance.Outbox.Playground.MessageAssembly", "Resonance.Outbox.AnotherMessageAssembly\Resonance.Outbox.Playground.MessageAssembly.csproj", "{8580503B-EB00-4F05-B41A-A58CC5D13E82}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Playground", "_Playground", "{4B22A22F-1A59-4FFB-B889-3C624D98AA04}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,6 +59,8 @@ Global
 		{9CE8C63B-F781-4B9E-9E41-5AD2D03C883F} = {CACEF747-2B88-4DEC-98AB-AC1E3FA01485}
 		{90C50EDA-D213-46BD-A9B6-02A98ECF9A93} = {751E3057-DE31-4C00-8D65-1FB873BDDF32}
 		{89A0E845-FF12-4CAA-B4B8-BE316C86D796} = {751E3057-DE31-4C00-8D65-1FB873BDDF32}
+		{DDAE7C18-E301-4E23-BB56-BE32F8EB3449} = {4B22A22F-1A59-4FFB-B889-3C624D98AA04}
+		{8580503B-EB00-4F05-B41A-A58CC5D13E82} = {4B22A22F-1A59-4FFB-B889-3C624D98AA04}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {90D407DA-6B65-43FC-ACD8-4C10657EEFAA}

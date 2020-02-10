@@ -5,13 +5,13 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Resonance.Outbox.Inbound;
-using Resonance.Outbox.MessageAssembly;
 using Resonance.Outbox.Outbound;
+using Resonance.Outbox.Playground.MessageAssembly;
 using Resonance.Outbox.Serialization.MessagePack;
 using Resonance.Outbox.Storage.SqlServer;
 using Xunit;
 
-namespace Resonance.Outbox.PlaygroundTests
+namespace Resonance.Outbox.Playground.Tests
 {
     public class TransactionalOutboxTests
     {
