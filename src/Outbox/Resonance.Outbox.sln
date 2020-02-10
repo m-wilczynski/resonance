@@ -15,9 +15,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Resonance.Outbox.Serializat
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Resonance.Outbox.Serialization.MessagePack", "Resonance.Outbox.Serialization.MessagePack\Resonance.Outbox.Serialization.MessagePack.csproj", "{89A0E845-FF12-4CAA-B4B8-BE316C86D796}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Resonance.Outbox.Playground.Tests", "Resonance.Outbox.PlaygroundTests\Resonance.Outbox.Playground.Tests.csproj", "{DDAE7C18-E301-4E23-BB56-BE32F8EB3449}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Resonance.Outbox.Playground.Tests", "_Playground\Resonance.Outbox.Playground.Tests\Resonance.Outbox.Playground.Tests.csproj", "{DDAE7C18-E301-4E23-BB56-BE32F8EB3449}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Resonance.Outbox.Playground.MessageAssembly", "Resonance.Outbox.AnotherMessageAssembly\Resonance.Outbox.Playground.MessageAssembly.csproj", "{8580503B-EB00-4F05-B41A-A58CC5D13E82}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Resonance.Outbox.Playground.MessageAssembly", "_Playground\Resonance.Outbox.Playground.MessageAssembly\Resonance.Outbox.Playground.MessageAssembly.csproj", "{8580503B-EB00-4F05-B41A-A58CC5D13E82}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Playground", "_Playground", "{4B22A22F-1A59-4FFB-B889-3C624D98AA04}"
 EndProject

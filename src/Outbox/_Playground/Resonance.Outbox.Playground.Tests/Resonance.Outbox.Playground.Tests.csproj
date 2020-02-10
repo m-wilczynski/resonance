@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Dapper" Version="1.60.6" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.7.0" />
+    <PackageReference Include="xunit" Version="2.3.1" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.3.1" />
+    <DotNetCliToolReference Include="dotnet-xunit" Version="2.3.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Resonance.Outbox.Serialization.MessagePack\Resonance.Outbox.Serialization.MessagePack.csproj" />
+    <ProjectReference Include="..\..\Resonance.Outbox.Storage.SqlServer\Resonance.Outbox.Storage.SqlServer.csproj" />
+    <ProjectReference Include="..\..\Resonance.Outbox\Resonance.Outbox.csproj" />
+    <ProjectReference Include="..\Resonance.Outbox.Playground.MessageAssembly\Resonance.Outbox.Playground.MessageAssembly.csproj" />
+  </ItemGroup>
+
+</Project>
