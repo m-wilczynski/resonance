@@ -63,7 +63,7 @@ namespace Resonance.Outbox.Storage.SqlServer
                 : "TOP 100 PERCENT";
 
             string sql = $@"
-                DECLARE @date DATETIME = GETDATE();
+                DECLARE @date DATETIME = GETUTCDATE();
 
                 UPDATE msg
                 SET {nameof(SerializedMessage.SuccessfulForwardDateUtc)} = @date
