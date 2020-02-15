@@ -18,7 +18,7 @@ namespace Resonance.Outbox.Playground.Tests
         private static readonly string connectionString =
             @"Server=localhost\MSSQLSERVER01;Database=test;Integrated Security=true;";
 
-        [Fact]
+        [Fact(Skip="Manual test only")]
         public async Task SaveAndRetrieve()
         {
             var outbox = await new TransactionOutboxBuilder()

@@ -21,6 +21,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Resonance.Outbox.Playground
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Playground", "_Playground", "{4B22A22F-1A59-4FFB-B889-3C624D98AA04}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Resonance.Outbox.Serialization.Tests", "Resonance.Outbox.Serialization.Tests\Resonance.Outbox.Serialization.Tests.csproj", "{D8BD25D6-7F42-4A26-A882-5C6927211501}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{8580503B-EB00-4F05-B41A-A58CC5D13E82}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8580503B-EB00-4F05-B41A-A58CC5D13E82}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8580503B-EB00-4F05-B41A-A58CC5D13E82}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D8BD25D6-7F42-4A26-A882-5C6927211501}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D8BD25D6-7F42-4A26-A882-5C6927211501}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D8BD25D6-7F42-4A26-A882-5C6927211501}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D8BD25D6-7F42-4A26-A882-5C6927211501}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -61,6 +67,7 @@ Global
 		{89A0E845-FF12-4CAA-B4B8-BE316C86D796} = {751E3057-DE31-4C00-8D65-1FB873BDDF32}
 		{DDAE7C18-E301-4E23-BB56-BE32F8EB3449} = {4B22A22F-1A59-4FFB-B889-3C624D98AA04}
 		{8580503B-EB00-4F05-B41A-A58CC5D13E82} = {4B22A22F-1A59-4FFB-B889-3C624D98AA04}
+		{D8BD25D6-7F42-4A26-A882-5C6927211501} = {751E3057-DE31-4C00-8D65-1FB873BDDF32}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {90D407DA-6B65-43FC-ACD8-4C10657EEFAA}

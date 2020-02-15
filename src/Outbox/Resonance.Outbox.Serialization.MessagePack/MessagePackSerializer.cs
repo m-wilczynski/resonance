@@ -23,7 +23,7 @@ namespace Resonance.Outbox.Serialization.MessagePack
 
         public byte[] Serialize<TMessage>(TMessage message)
         {
-            return global::MessagePack.MessagePackSerializer.Serialize(message);
+            return global::MessagePack.MessagePackSerializer.NonGeneric.Serialize(message.GetType(), message);
         }
 
         public object Deserialize(Type messageType, byte[] message)

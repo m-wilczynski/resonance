@@ -11,7 +11,7 @@ namespace Resonance.Outbox.Serialization.Utf8Json
         public byte[] Serialize<TMessage>(TMessage message)
         {
             //TODO: Compare with performance using MemoryStream && SerializeAsync
-            return JsonSerializer.Serialize(message, _resolver);
+            return JsonSerializer.NonGeneric.Serialize(message.GetType(), message, _resolver);
         }
 
         public object Deserialize(Type messageType, byte[] message)

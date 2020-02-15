@@ -12,12 +12,54 @@ pool:
 variables:
   buildConfiguration: 'Release'
 
-steps:
-- script: cd ./src/FeatureFlags && dotnet build --configuration $(buildConfiguration)
-  displayName: 'FeatureFlags - dotnet build $(buildConfiguration)'
+stages:
+- stage: FeatureFlags
+  displayName: Resonance.FeatureFlags
+  dependsOn: []
+  jobs:
+  - job: Build
+    steps:
+    - script: cd ./src/FeatureFlags && dotnet build --configuration $(buildConfiguration)
 
-- script: cd ./src/UseCases && dotnet build --configuration $(buildConfiguration)
-  displayName: 'UseCases - dotnet build $(buildConfiguration)'
+- stage: UseCases
+  displayName: Resonance.UseCases
+  dependsOn: []
+  jobs:
+  - job: Build
+    steps:
+      - script: cd ./src/UseCases && dotnet build --configuration $(buildConfiguration)
 
-- script: cd ./src/Outbox && dotnet build --configuration $(buildConfiguration)
-  displayName: 'Outbox - dotnet build $(buildConfiguration)'
+- stage: Outbox_Windows
+  displayName: Windows | Resonance.Outbox
+  pool:
+    vmImage: 'windows-latest'
+  dependsOn: []
+  jobs:
+  - job: Build
+    steps:
+    - script: cd ./src/Outbox && dotnet build --configuration $(buildConfiguration)
+    - task: VSTest@2
+      inputs:
+        testSelector: 'testAssemblies'
+        testAssemblyVer2: |
+          **\*.Tests.dll
+          !**\*TestAdapter.dll
+          !**\obj\**
+          !**\*Playground.Tests.dll
+        searchFolder: '$(System.DefaultWorkingDirectory)'
+
+- stage: Outbox_Linux
+  displayName: Linux | Resonance.Outbox
+  pool:
+    vmImage: 'ubuntu-latest'
+  dependsOn: []
+  jobs:
+  - job: Build_Test
+    displayName: Build and test
+    steps:
+    - script: cd ./src/Outbox && dotnet build --configuration $(buildConfiguration) && dotnet test --logger trx
+    - task: PublishTestResults@2
+      condition: succeededOrFailed()
+      inputs:
+        testRunner: VSTest
+        testResultsFiles: '**/*.trx'
