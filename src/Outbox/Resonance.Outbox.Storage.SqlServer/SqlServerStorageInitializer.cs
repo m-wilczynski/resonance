@@ -2,6 +2,7 @@
 using System.Data;
 using System.Threading.Tasks;
 using Dapper;
+using Resonance.Outbox.Outbound;
 using Resonance.Outbox.Serialization;
 
 namespace Resonance.Outbox.Storage.SqlServer
@@ -31,6 +32,11 @@ namespace Resonance.Outbox.Storage.SqlServer
             using (var connection = _connectionFactory())
             {
                 string sql = $@"
+                    IF (NOT EXISTS (SELECT * FROM sys.schemas WHERE name = '{_storageConfiguration.SchemaName}')) 
+                    BEGIN
+                        EXEC ('CREATE SCHEMA [{_storageConfiguration.SchemaName}] AUTHORIZATION [dbo]');
+                    END;
+
                     IF NOT EXISTS 
                     (
 	                    SELECT 1 
@@ -39,7 +45,7 @@ namespace Resonance.Outbox.Storage.SqlServer
 	                    ON (tables.schema_id = schemas.schema_id) 
 	                    WHERE schemas.name = '{_storageConfiguration.SchemaName}' and tables.name = '{_storageConfiguration.MessageTableName}'
                     )
-                    CREATE TABLE dbo.messages
+                    CREATE TABLE {_storageConfiguration.SchemaName}.{_storageConfiguration.MessageTableName}
                     (
 	                    Id INT IDENTITY(1,1) PRIMARY KEY,
 	                    {nameof(SerializedMessage.Payload)} VARBINARY(MAX) NOT NULL,
@@ -69,11 +75,11 @@ namespace Resonance.Outbox.Storage.SqlServer
 	                    ON (tables.schema_id = schemas.schema_id) 
 	                    WHERE schemas.name = '{_storageConfiguration.SchemaName}' and tables.name = '{_storageConfiguration.LogTableName}'
                     )
-                    CREATE TABLE dbo.logs
+                    CREATE TABLE {_storageConfiguration.SchemaName}.{_storageConfiguration.LogTableName}
                     (
 	                    Id INT IDENTITY(1,1) PRIMARY KEY,
-	                    CompletionDate DATETIME NOT NULL,
-	                    Success BIT NOT NULL
+	                    {nameof(ForwardLogEntry.CompletionDateUtc)} DATETIME NOT NULL,
+	                    {nameof(ForwardLogEntry.Success)} BIT NOT NULL
                     );";
 
                 await connection.ExecuteAsync(sql,

@@ -8,6 +8,7 @@ using Resonance.Outbox.Inbound;
 using Resonance.Outbox.Outbound;
 using Resonance.Outbox.Playground.MessageAssembly;
 using Resonance.Outbox.Serialization.MessagePack;
+using Resonance.Outbox.Storage;
 using Resonance.Outbox.Storage.SqlServer;
 using Xunit;
 
@@ -18,16 +19,26 @@ namespace Resonance.Outbox.Playground.Tests
         private static readonly string connectionString =
             @"Server=localhost\MSSQLSERVER01;Database=test;Integrated Security=true;";
 
-        [Fact(Skip="Manual test only")]
+        [Fact]
+        [Trait("Category", "Playground")]
         public async Task SaveAndRetrieve()
         {
+            var storageConfig = new StorageConfiguration
+            {
+                InitializeTablesOnStartup = true,
+                LogTableName = "logs",
+                MessageTableName = "messages",
+                OperationTimeoutInSeconds = 5,
+                SchemaName = "playground"
+            };
+
             var outbox = await new TransactionOutboxBuilder()
-                .UseSqlServer(connectionString)
+                .UseSqlServer(connectionString, storageConfig)
                 .UseMessagePack()
                 .Build();
 
             var outboxForwarder = await new OutboxForwarderBuilder()
-                .UseSqlServer(connectionString)
+                .UseSqlServer(connectionString, storageConfig)
                 .UseMessagePack()
                 .UseMessageForwarders(new[] {new HelloForwarder()})
                 .Build();

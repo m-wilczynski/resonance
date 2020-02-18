@@ -57,7 +57,7 @@ stages:
   - job: Build_Test
     displayName: Build and test
     steps:
-    - script: cd ./src/Outbox && dotnet build --configuration $(buildConfiguration) && dotnet test --logger trx
+    - script: cd ./src/Outbox/Resonance.Outbox.Serialization.Tests && dotnet build --configuration $(buildConfiguration) && dotnet test --logger trx
     - task: PublishTestResults@2
       condition: succeededOrFailed()
       inputs:
