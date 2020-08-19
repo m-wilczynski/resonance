@@ -39,7 +39,7 @@ namespace Resonance.Outbox.Storage.SqlServer
                 using (var connection = _connectionFactory())
                 {
                     await connection.ExecuteAsync(sql, serializedMessage,
-                        commandTimeout: _storageConfiguration.OperationTimeoutInSeconds);
+                        commandTimeout: _storageConfiguration.OperationTimeoutInSeconds).ConfigureAwait(false);
                 }
             }
             else
@@ -47,7 +47,7 @@ namespace Resonance.Outbox.Storage.SqlServer
                 await transaction.Connection.ExecuteAsync(sql, 
                     param: serializedMessage,
                     commandTimeout: _storageConfiguration.OperationTimeoutInSeconds,
-                    transaction: transaction);
+                    transaction: transaction).ConfigureAwait(false);
             }
         }
 
@@ -77,7 +77,7 @@ namespace Resonance.Outbox.Storage.SqlServer
             return (await transaction.Connection.QueryAsync<SerializedMessage>(sql,
                 param: null,
                 commandTimeout: _storageConfiguration.OperationTimeoutInSeconds,
-                transaction: transaction)).ToList();
+                transaction: transaction).ConfigureAwait(false)).ToList();
 
         }
 

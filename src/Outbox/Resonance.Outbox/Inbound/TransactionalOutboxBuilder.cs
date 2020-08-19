@@ -33,7 +33,7 @@ namespace Resonance.Outbox.Inbound
         {
             if (_storageInitializer?.InitializeOnStartup == true)
             {
-                await _storageInitializer.InitializeTables();
+                await _storageInitializer.InitializeTables().ConfigureAwait(false);
             }
             return new TransactionalOutbox(_repository, _serializer);
         }

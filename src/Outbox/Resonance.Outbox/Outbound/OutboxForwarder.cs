@@ -49,9 +49,8 @@ namespace Resonance.Outbox.Outbound
                     try
                     {
                         var messagesToForward = _forwardingOptions.ReadMode == ReadMode.ReadThenMarkAsRead
-                            ? await _messageRepository.GetMessagesAsMarkedSent(transaction,
-                                _forwardingOptions.BatchSize)
-                            : await _messageRepository.GetMessagesAsRemoved(transaction, _forwardingOptions.BatchSize);
+                            ? await _messageRepository.GetMessagesAsMarkedSent(transaction, _forwardingOptions.BatchSize).ConfigureAwait(false)
+                            : await _messageRepository.GetMessagesAsRemoved(transaction, _forwardingOptions.BatchSize).ConfigureAwait(false);
 
                         //TODO: Introduce parallelism (ie. Parallel.ForEach) ?
                         foreach (var message in messagesToForward)
@@ -80,26 +79,26 @@ namespace Resonance.Outbox.Outbound
 
                             foreach (var forwarder in forwarders)
                             {
-                                await forwarder.Forward(deserializedMessage);
+                                await forwarder.Forward(deserializedMessage).ConfigureAwait(false);
                             }
                         }
 
                         if (_forwardingOptions.LogCompletionInsideTransaction)
                         {
-                            await LogForwardSuccess(forwardStart, DateTime.UtcNow);
+                            await LogForwardSuccess(forwardStart, DateTime.UtcNow).ConfigureAwait(false);
                         }
 
                         transaction.Commit();
 
                         if (!_forwardingOptions.LogCompletionInsideTransaction)
                         {
-                            await LogForwardSuccess(forwardStart, DateTime.UtcNow);
+                            await LogForwardSuccess(forwardStart, DateTime.UtcNow).ConfigureAwait(false);
                         }
                     }
                     catch (Exception ex)
                     {
                         transaction.Rollback();
-                        await LogForwardFailure(ex, forwardStart, DateTime.UtcNow);
+                        await LogForwardFailure(ex, forwardStart, DateTime.UtcNow).ConfigureAwait(false);
                     }
                 }
             }

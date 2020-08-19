@@ -84,7 +84,7 @@ namespace Resonance.Outbox.Storage.SqlServer
 
                 await connection.ExecuteAsync(sql,
                     param: _storageConfiguration,
-                    commandTimeout: _storageConfiguration.OperationTimeoutInSeconds);
+                    commandTimeout: _storageConfiguration.OperationTimeoutInSeconds).ConfigureAwait(false);
             }
         }
     }
