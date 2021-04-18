@@ -1,4 +1,7 @@
-# resonance
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/6330789/115151419-0a52a580-a06d-11eb-8d6b-4c001e807003.png"/>
+</p>
+</br>
 
 Set of libraries that I've used, am using currently or plan to use in a nearby future in similiar or exact way throughout the projects I'm working with.
 
